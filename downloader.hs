@@ -1,4 +1,6 @@
+import Control.Monad
 import Data.List
+import System.Environment
 import Text.HandsomeSoup
 import Text.XML.HXT.Core
 
@@ -10,5 +12,5 @@ extractGalleryPage url = do
   return $ images ++ movies
 
 main = do
-  links <- extractGalleryPage "URL"
-  mapM_ (putStrLn . show) $ links
+  links <- liftM concat $ mapM extractGalleryPage =<< getArgs
+  mapM_ putStrLn $ links
