@@ -1,3 +1,4 @@
+import Control.Concurrent.Async
 import Control.Monad
 import Data.List
 import System.Environment
@@ -11,6 +12,8 @@ extractGalleryPage url = do
   movies <- runX $ doc >>> css "source" ! "src"
   return $ images ++ movies
 
+printImageUrls :: String -> IO ()
+printImageUrls url = mapM_ putStrLn =<< extractGalleryPage url
+
 main = do
-  links <- liftM concat $ mapM extractGalleryPage =<< getArgs
-  mapM_ putStrLn $ links
+  mapConcurrently printImageUrls =<< getArgs
