@@ -20,7 +20,7 @@ printImageUrlsIfNotDownloaded url = do
   mapM_ putStrLn =<< filterM (liftM not . downloaded) urls
 
 downloaded :: String -> IO Bool
-downloaded  = doesFileExist . filename
+downloaded = doesFileExist . filename
 
 filename :: String -> FilePath
 filename = reverse . takeWhile (/= '/') . reverse
