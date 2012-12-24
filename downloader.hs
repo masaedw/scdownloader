@@ -7,7 +7,12 @@ import Text.HandsomeSoup
 import Text.XML.HXT.Core
 
 main = do
-  mapConcurrently printImageUrlsIfNotDownloaded =<< getArgs
+  mapConcurrently printImageUrlsIfNotDownloaded =<< parseTopPage
+
+parseTopPage :: IO [String]
+parseTopPage = do
+  doc <- fromUrl "http://www.s-cute.com/"
+  runX $ doc >>> css ".newcontent h5 a" ! "href"
 
 printImageUrlsIfNotDownloaded :: String -> IO ()
 printImageUrlsIfNotDownloaded url = do
