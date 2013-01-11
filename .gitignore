@@ -1,3 +1,6 @@
+# intermediate files
 *.o
 *.hi
-downloader
+
+# binary
+scdownloader
